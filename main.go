@@ -11,6 +11,6 @@ func main() {
 	route := gin.Default()
 	routes.RouterAPI(route)
 
-	// Listen and Server in http://0.0.0.0:8080
+	// Listen and Server in http://localhost:8080
 	route.Run()
 }
