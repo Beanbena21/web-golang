@@ -2,7 +2,6 @@ package database
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"bean.com/web-service/models"
@@ -21,13 +20,6 @@ func HandleRegister(register *models.Register) (*mongo.InsertOneResult, error) {
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
 	}
-
-	result, _ := HandleLogin(register.Email)
-	if result.Email != "" {
-
-		return nil, errors.New("email is exist")
-	}
-
 	value, err := collection.InsertOne(context.TODO(), user)
 	if err != nil {
 		return nil, err

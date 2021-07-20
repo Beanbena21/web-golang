@@ -17,6 +17,14 @@ func Register(g *gin.Context) {
 		})
 		return
 	}
+	result, _ := database.HandleLogin(register.Email)
+	if result.Email != "" {
+		g.AbortWithStatusJSON(500, gin.H{
+			"status":  500,
+			"message": "Email is exist",
+		})
+		return
+	}
 	value, err := database.HandleRegister(&register)
 	if err != nil {
 		g.AbortWithStatusJSON(500, gin.H{
@@ -62,7 +70,7 @@ func Login(g *gin.Context) {
 		})
 		return
 	}
-	g.JSON(200, gin.H{"status": 200, "message": "Log in success", "token": token})
+	g.JSON(200, gin.H{"status": 200, "message": "Log in success", "token": token, "info": result})
 
 }
 
